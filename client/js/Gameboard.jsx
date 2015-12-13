@@ -14,7 +14,7 @@ Gameboard = React.createClass({
 
 	buildRows(){
 		gameRows = [];
-		var n = 9;
+		var n = 5;
 		var rows = _.groupBy(this.data.boxes, function(element, index){return Math.floor(index/n)});
 		rows = _.toArray(rows);
 		game = this.data.game;

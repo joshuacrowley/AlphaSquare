@@ -113,7 +113,7 @@ runLogic = function(future, box, content){
     };
   });
 
-  var puzzle = game.match(/.{1,9}/g);
+  var puzzle = game.match(/.{1,5}/g);
 
   console.log("woot");
 
@@ -126,24 +126,24 @@ runLogic = function(future, box, content){
       var solver = new Logic.Solver();
 
       // All rows, columns, and digits are 0-based internally.
-      for (var x = 0; x < 9; x++) {
+      for (var x = 0; x < 5; x++) {
         // Find the top-left of box x. For example, Box 0 has a top-left
         // of (0,0).  Box 3 has a top-left of (3,0).
-        var boxRow = Math.floor(x/3)*3;
-        var boxCol = (x%3)*3;
-        for (var y = 0; y < 9; y++) {
+        //var boxRow = Math.floor(x/3)*3;
+        //var boxCol = (x%3)*3;
+        for (var y = 0; y < 5; y++) {
           var numberInEachSquare = [];
           var columnHavingYInRowX = [];
           var rowHavingYInColumnX = [];
           var squareHavingYInBoxX = [];
-          for (var z = 0; z < 9; z++) {
-            numberInEachSquare.push(v(x,y,z));
+          for (var z = 0; z < 5; z++) {
+            //numberInEachSquare.push(v(x,y,z));
             columnHavingYInRowX.push(v(x,z,y));
             rowHavingYInColumnX.push(v(z,x,y));
-            squareHavingYInBoxX.push(v(
+            /*squareHavingYInBoxX.push(v(
               boxRow + Math.floor(z/3),
               boxCol + (z%3),
-              y));
+              y));*/
           }
           //solver.require(Logic.exactlyOne(numberInEachSquare));
           solver.require(Logic.exactlyOne(columnHavingYInRowX));
@@ -153,12 +153,12 @@ runLogic = function(future, box, content){
         }
       }
 
-      for (var r = 0; r < 9; r++) {
+      for (var r = 0; r < 5; r++) {
         var str = puzzle[r];
-        for (var c = 0; c < 9; c++) {
+        for (var c = 0; c < 5; c++) {
           // zero-based digit
           var digit = str.charCodeAt(c) - 49;
-          if (digit >= 0 && digit < 9) {
+          if (digit >= 0 && digit < 5) {
             solver.require(v(r, c, digit));
           }
         }
@@ -168,17 +168,17 @@ runLogic = function(future, box, content){
       console.log("Solved in " + ((new Date) - T) + " ms");
 
       var solution = [];
-      for (var r = 0; r < 9; r++) {
+      for (var r = 0; r < 5; r++) {
         var row = [];
         solution.push(row);
         var str = puzzle[r];
-        for (var c = 0; c < 9; c++) {
+        for (var c = 0; c < 5; c++) {
           var chr = str.charAt(c);
-          if (chr >= "1" && chr <= "9") {
+          if (chr >= "1" && chr <= "5") {
             row.push({given: chr});
           } else {
             var nums = [];
-            for (var d = 0; d < 9; d++) {
+            for (var d = 0; d < 5; d++) {
               var x = v(r, c, d);
               if (solver.solveAssuming(x)) {
                 nums.push(d+1);
@@ -192,17 +192,17 @@ runLogic = function(future, box, content){
       };
 
       var raw = [];
-      for (var r = 0; r < 9; r++) {
+      for (var r = 0; r < 5; r++) {
         var row = [];
         raw.push(row);
         var str = puzzle[r];
-        for (var c = 0; c < 9; c++) {
+        for (var c = 0; c < 5; c++) {
           var chr = str.charAt(c);
-          if (chr >= "1" && chr <= "9") {
+          if (chr >= "1" && chr <= "5") {
             row.push([parseInt(chr)]);
           } else {
             var nums = [];
-            for (var d = 0; d < 9; d++) {
+            for (var d = 0; d < 5; d++) {
               var x = v(r, c, d);
               if (solver.solveAssuming(x)) {
                 nums.push(d+1);
@@ -223,7 +223,7 @@ runLogic = function(future, box, content){
         //var plucky = _.pluck(flat, "allowed");
         
 		var rows = _.groupBy(flat, function(element, index){
-		  return Math.floor(index/9);
+		  return Math.floor(index/5);
 		});
 
 		var rows = $.map(rows, function(value, index) {
@@ -231,7 +231,7 @@ runLogic = function(future, box, content){
 		});
 
 		var columns = _.groupBy(flat, function(element, index){
-		    return index%9;
+		    return index%5;
 		});
 
 		var columns = $.map(columns, function(value, index) {
@@ -243,7 +243,7 @@ runLogic = function(future, box, content){
 		rows.forEach(function (row) {
 			var flatter = _.flatten(row);
       var sum = _.reduce(flatter, function(memo, num){ return memo + num; }, 0);
-      if(sum != 45){
+      if(sum != 15){
         var unique = _.uniq(flatter);
         results.push(unique);
       };
@@ -252,7 +252,7 @@ runLogic = function(future, box, content){
 		columns.forEach(function (column) {
 			var flatter = _.flatten(column);
       var sum = _.reduce(flatter, function(memo, num){ return memo + num; }, 0);
-      if(sum != 45){
+      if(sum != 15){
         	var unique = _.uniq(flatter);
         	results.push(unique);
       };
@@ -274,7 +274,7 @@ runLogic = function(future, box, content){
 
         	var outcome = _.difference(uniqueTiles, result);
 
-		        if (result.length !== 9){
+		        if (result.length !== 5){
 		        //if(!outcome){
 		          okay = false;
 		        }

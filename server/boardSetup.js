@@ -1,7 +1,7 @@
 startGame = function (){
 
-  var gridWidth = 9;
-  var gridHeight = 9;
+  var gridWidth = 5;
+  var gridHeight = 5;
   var token = Random.id([8]);
   
   rangeCorrect = function (num){
@@ -12,9 +12,11 @@ startGame = function (){
     }
   };
 
-  var sequence = [1,2,3,4,5,6,7,8,9,9,1,2,3,4,5,6,7,8,8,9,1,2,3,4,5,6,7,7,8,9,1,2,3,4,5,6,6,7,8,9,1,2,3,4,5,5,6,7,8,9,1,2,3,4,4,5,6,7,8,9,1,2,3,3,4,5,6,7,8,9,1,2,2,3,4,5,6,7,8,9,1];
+  var sequence = [1,2,3,4,5,5,1,2,3,4,4,5,1,2,3,3,4,5,1,2,2,3,4,5,1];
 
-  var n = 9;
+  //var sequence = [1,2,3,4,5,6,7,8,9,9,1,2,3,4,5,6,7,8,8,9,1,2,3,4,5,6,7,7,8,9,1,2,3,4,5,6,6,7,8,9,1,2,3,4,5,5,6,7,8,9,1,2,3,4,4,5,6,7,8,9,1,2,3,3,4,5,6,7,8,9,1,2,2,3,4,5,6,7,8,9,1];
+
+  var n = 5;
   var rows = _.groupBy(sequence, function(element, index){
       return Math.floor(index/n);
   });
@@ -29,7 +31,7 @@ startGame = function (){
   columns = _.shuffle(columns);
   fixedSequence = _.flatten(columns);
 
-  var tilesToHide = _.sample(_.range(0,81),20);
+  var tilesToHide = _.sample(_.range(0,25),25);
 
   Games.insert({
     gameToken: token,

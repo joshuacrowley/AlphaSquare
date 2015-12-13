@@ -1,10 +1,7 @@
 <template name="menu">
 		<div class="container">
 			<div class="row">
-				<h1 class="animated pulse"><strong>Alpha</strong>Better</h1>
-				<div class="byline">
-				<span>by </span> <img style="width:200px;" src="logo.png" />
-				</div>
+				<h1 class="animated pulse"><strong>Alpha</strong>Square</h1>
 			</div>
 			<div class="row">
 				<h4>Take the best guess, first!</h4>
@@ -37,8 +34,7 @@
 			<div class="row">
 				<div class="ten columns">
 			<span style="display:block;margin-top:25px;">
-				<strong>Latest Fix</strong> – Occasionally your placed tile wouldn’t correspond with the tile selected. This is now fixed.
-				<br> <strong>New Feature</strong> – You can play AlphaBetter on your smartphone.
+		
 			</span> 
 				</div>
 			</div>
@@ -51,9 +47,9 @@
 		<div class="row" id="gameboard">
 			<div class="three columns">
 				<div class="row">
-					<h3 id="logotype"><strong>Alpha</strong>Better</h3>
+					<h3 id="logotype"><strong>Alpha</strong>Square</h3>
 					{{#if gameOver}}
-						<span><strong>This game is over.</strong> Enjoying brain training? Why not try<a href="http://activememory.com/?utm_source=bigboard&utm_medium=banner&utm_campaign=Big%20Board%20Refferal"> ABC Active Memory</a>.</span>
+						<span><strong>This game is over.</strong></span>
 						<button id="join-game">Join new game</button>
 					{{else}}
 						
@@ -77,7 +73,7 @@
 		</div>
 
 		<div class="row">
-			{{> rules}}
+			<!--{{> rules}}-->
 		</div>
 
 		<a href="https://mixpanel.com/f/partner"><img src="//cdn.mxpnl.com/site_media/images/partner/badge_light.png" alt="Mobile Analytics" /></a>
