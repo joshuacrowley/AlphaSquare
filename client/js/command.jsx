@@ -47,7 +47,7 @@ numberAlpha = function(number) {
 	    }
 	};
 
-placeTile = function(tileSpot, boxSpot) {
+placeTile = function(tileSpot, boxSpot, penaltyValue) {
 
 	var tileToMove = Tiles.findOne({gameToken : Session.get("gameToken"), spot: tileSpot });
 	var BoxToPlace = Boxes.findOne({gameToken : Session.get("gameToken"), boxOrder : boxSpot});
@@ -59,8 +59,19 @@ placeTile = function(tileSpot, boxSpot) {
 		Meteor.call('moveTileDiscardTile', BoxToPlace, tileToMove, Session.get("gameToken"), function (error, result) {
 			if(!error){
 
-				Session.set("outcome", "Nice move, you've gained two points. Pick another tile.");
-				Meteor.call('updateScore', Session.get("gameId"), Session.get("playerToken"), 2);
+        if (penaltyValue != tileToMove.content ) {
+
+            Session.set("outcome", "Nice move, you've gained two points. Pick another tile.");
+            Meteor.call('updateScore', Session.get("gameId"), Session.get("playerToken"), 2);
+
+        }else{
+
+          Session.set("outcome", "Oh no. Your tile matched the spot, so you don't earn any points. Pick another tile.");
+
+        }
+
+        Meteor.call('swapPlayers', Session.get("gameToken"), Session.get("playerToken"));
+
 				$('#outcome').addClass('animated pulse').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', 
 					function(){
 						$(this).removeClass('animated pulse');
@@ -137,7 +148,7 @@ runLogic = function(future, box, content){
           var rowHavingYInColumnX = [];
           var squareHavingYInBoxX = [];
           for (var z = 0; z < 5; z++) {
-            //numberInEachSquare.push(v(x,y,z));
+            numberInEachSquare.push(v(x,y,z));
             columnHavingYInRowX.push(v(x,z,y));
             rowHavingYInColumnX.push(v(z,x,y));
             /*squareHavingYInBoxX.push(v(
@@ -145,7 +156,7 @@ runLogic = function(future, box, content){
               boxCol + (z%3),
               y));*/
           }
-          //solver.require(Logic.exactlyOne(numberInEachSquare));
+          solver.require(Logic.exactlyOne(numberInEachSquare));
           solver.require(Logic.exactlyOne(columnHavingYInRowX));
           solver.require(Logic.exactlyOne(rowHavingYInColumnX));
           //solver.require(Logic.exactlyOne(squareHavingYInBoxX));

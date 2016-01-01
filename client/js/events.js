@@ -1,6 +1,6 @@
 Template.menu.events({
   'click button': function () {
-    Meteor.call('findGame', function(error, result){
+    Meteor.call('findGame', Session.get('playerToken'), function(error, result){
       Router.go('games', {_id: result});
       Session.set('gameToken', result);
     });
@@ -28,7 +28,7 @@ Template.handle.events({
 
 Template.gameboard.events({
   'click button#join-game': function () {
-    Meteor.call('findGame', function(error, result){
+    Meteor.call('findGame', Session.get('playerToken'), function(error, result){
       Router.go('games', {_id: result});
       Session.set('gameToken', result);
     });

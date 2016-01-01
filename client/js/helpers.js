@@ -40,7 +40,20 @@ Template.leaderboard.helpers({
 
 Template.tileList.helpers({
   tiles: function () {
-    var tileHand = Tiles.find({gameToken : Session.get("gameToken"), tileState: "unplayed"}).fetch();
+
+    var ownerType;
+
+    var game = Games.findOne({gameToken: Session.get("gameToken")});
+
+    if(Session.get("playerToken") === game.gameOwner){
+      ownerType = "gameOwner";
+    }else if(Session.get("playerToken") === game.gameOpponent){
+      ownerType = "gameOpponent";
+    } else{
+      ownerType = "none";
+    };
+
+    var tileHand = Tiles.find({gameToken : Session.get("gameToken"), tileState: "unplayed", owner: ownerType}).fetch();
     if(Session.get("shared") === true){
       return _.first(tileHand, 4);
     }else{

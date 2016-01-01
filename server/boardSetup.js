@@ -1,4 +1,4 @@
-startGame = function (){
+startGame = function (gameOwner){
 
   var gridWidth = 5;
   var gridHeight = 5;
@@ -38,18 +38,27 @@ startGame = function (){
     createdAt: new Date(),
     finished: false,
     endGame: false,
+    turnState: gameOwner,
+    gameOwner: gameOwner,
+    gameOpponent: "none",
     player: []
   });
 
+  var player = "gameOpponent";
+
   tilesToHide.forEach(function (tile) {
+
+    player = (player === "gameOpponent") ? "gameOwner" : "gameOpponent";
+
         Tiles.insert({
           "gameToken": token,
           tileState: "unplayed",
-          owner : "none",
+          owner : player,
           spot: tile,
           content: fixedSequence[tile],
           createdAt: new Date()
         });
+
   });
 
   var i = 0;
@@ -65,13 +74,16 @@ startGame = function (){
       };
 
       Boxes.insert({
-        "boxOrder" : i++,
+        "penaltyValue" : sequence[i],
+        "boxOrder" : i,
         "gameToken": token,
         "createdAt": new Date(),
         "content": value,
         "hidden": hidden,
         "special" : "none"
       });
+
+      i++;
 
   });
 

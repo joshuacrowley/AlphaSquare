@@ -1,12 +1,13 @@
 Meteor.methods({
 
-  findGame : function(){
+  findGame : function(gameOwner){
     var games = Games.findOne({finished: false});
     if (games != undefined){
       return games.gameToken;
     }else{
-      var token = startGame();
-      console.log(token);
+      var token = startGame(gameOwner);
+      //var gameId = Games.findOne({gameToken: token})._id;
+      Meteor.call('addOpponent', token, gameOwner);
       return token;
     };
   },
@@ -71,9 +72,11 @@ Meteor.methods({
 
   },
 
-  addOpponent : function (gameId, playerToken){
+  addOpponent : function (gameToken, playerToken, Opponent){
 
-    var game = Games.findOne({_id : gameId});
+    var game = Games.findOne({gameToken : gameToken});
+
+    if(Opponent){Games.update({_id: game._id}, {$set: {"gameOpponent" : playerToken}})};
 
     Games.update(
     {_id: game._id, 'player.playerToken': {$ne: playerToken}}, 
@@ -86,7 +89,7 @@ Meteor.methods({
     Tiles.update({_id : tileToMove._id}, {$set : {tileState : "played"}});
     var boxCount = Boxes.find({gameToken: gameToken, hidden : false}).count();
 
-        if(boxCount === 100){
+        if(boxCount === 25){
           Games.update({gameToken: gameToken}, {$set: {finished : true}});
           console.log('game over');
         }else{
@@ -96,6 +99,11 @@ Meteor.methods({
          return true
   },
 
+  swapPlayers : function(gameToken, playerToken){
+    var game = Games.findOne({"gameToken" : gameToken});
+    var player = (game.turnState === game.gameOwner) ? game.gameOpponent : game.gameOwner;
+    Games.update({_id : game._id},{$set: {turnState : player}});
+  },
 
   clearGame : function (gameToken){
     var game = Games.findOne({"gameToken": gameToken});

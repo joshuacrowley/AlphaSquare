@@ -1,6 +1,27 @@
-Router.route('/', function () {
-	this.render('menu');
-	Meteor.subscribe("games");
+Router.route('/', {
+	name: 'menu',
+	template: 'menu',
+
+	subscriptions: function() {
+		var subs = [];
+		subs.push(Meteor.subscribe("games"));
+		return subs
+	},
+
+	waitOn: function() {
+
+		if (typeof Session.get('playerToken') === 'undefined'){
+			var playerToken = Random.id([8]);
+			Session.setDefaultPersistent('playerToken', playerToken);
+			//Meteor.call('addOpponent', Session.get("gameId"), playerToken);
+    		analytics.identify(playerToken);
+ 
+		}else{
+			
+			analytics.identify(Session.get('playerToken'));
+		};
+	}
+
 });
 
 Router.route('/games/:_id', {
@@ -16,6 +37,9 @@ Router.route('/games/:_id', {
 	},
 
 	waitOn: function() {
+
+		game = Games.findOne({gameToken: this.params._id});
+
 		Session.setDefaultPersistent("playerScore", 0);
 		Session.setDefaultPersistent("outcome", "Welcome! Click a tile, and then tap on the board to place it.");
 		Session.setDefaultPersistent('shared', false);
@@ -25,7 +49,7 @@ Router.route('/games/:_id', {
 		Session.setDefault("number", 0);
 		
 		Session.set("gameToken", this.params._id);
-		Session.set("gameId", Games.findOne({gameToken: this.params._id})._id);
+		Session.set("gameId", game._id);
 		
 		var current = Iron.Location.get();
 
@@ -36,13 +60,17 @@ Router.route('/games/:_id', {
 		if (typeof Session.get('playerToken') === 'undefined'){
 			var playerToken = Random.id([8]);
 			Session.setDefaultPersistent('playerToken', playerToken);
-			Meteor.call('addOpponent', Session.get("gameId"), playerToken);
     		analytics.identify(playerToken);
  
 		}else{
-			Meteor.call('addOpponent', Session.get("gameId"), Session.get('playerToken'));
+			
 			analytics.identify(Session.get('playerToken'));
 		};
+
+		if(game.gameOwner != Session.get("playerToken") && game.gameOpponent === "none"){
+			Meteor.call('addOpponent', Session.get("gameToken"), Session.get("playerToken"), true);
+		}
+
     }
 
 });
