@@ -39,17 +39,8 @@ Box = React.createClass({
 			var number = $(selected).data("spot");
 			var content = $(selected).data("content");
 
-			var outcome = runLogic(true, this.props.box.boxOrder,content);
-
-			if(outcome){
-
-				placeTile(number, this.props.box.boxOrder, this.props.box.penaltyValue);
-    			//var highlightedTile = tiles.index(selected) + 1;
-      			$( "li" ).removeClass("highlight");
-
-			}else{
-				Session.set("outcome", "That would break the board.");
-			};
+			placeTile(number, this.props.box.boxOrder, this.props.box.penaltyValue);
+			$( "li" ).removeClass("highlight");
 
     	}else{
       		Session.set("outcome", "Select a tile from the list on the far right. Then click on a box.");
@@ -109,7 +100,7 @@ Box = React.createClass({
       			suggest = true
 			};
 
-		var suggestHelper = suggest === false ? " suggest" : "";
+		var suggestHelper = suggest === false ? " suggest" : " white";
 		var gameOver = this.props.gameData.endGame === true && this.props.box.hidden === false ? "box white" : "box";
 		var boxClass =  gameOver += suggestHelper;
 

@@ -1,10 +1,19 @@
 Template.menu.events({
-  'click button': function () {
-    Meteor.call('findGame', Session.get('playerToken'), function(error, result){
+  'click #join-public': function () {
+    Meteor.call('findGame', Session.get('playerToken'), true, function(error, result){
       Router.go('games', {_id: result});
       Session.set('gameToken', result);
     });
-    analytics.track("Joined Game");
+    analytics.track("Joined game");
+    //ga('send', 'event', 'button', 'click', 'join-game');
+  },
+    'click #create-private': function () {
+    Meteor.call('findGame', Session.get('playerToken'), false, function(error, result){
+      Router.go('games', {_id: result});
+      Session.set('gameToken', result);
+    });
+    Session.set("outcome", "Created a private game, share the url with a friend! They'll get to go first.");
+    analytics.track("Joined game");
     //ga('send', 'event', 'button', 'click', 'join-game');
   }
 });

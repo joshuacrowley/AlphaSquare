@@ -1,4 +1,4 @@
-startGame = function (gameOwner){
+startGame = function (gameOwner, publicGame){
 
   var gridWidth = 5;
   var gridHeight = 5;
@@ -36,6 +36,7 @@ startGame = function (gameOwner){
   Games.insert({
     gameToken: token,
     createdAt: new Date(),
+    publicGame: publicGame,
     finished: false,
     endGame: false,
     turnState: gameOwner,
@@ -87,5 +88,11 @@ startGame = function (gameOwner){
 
   });
 
-    return token;
+  var tileToMove = Tiles.findOne({gameToken: token, spot : 1});
+  var BoxToPlace = Boxes.findOne({gameToken: token, boxOrder : 12});
+  Boxes.update({ _id : BoxToPlace._id}, {$set : {content : tileToMove.content, hidden : false}});
+  Tiles.update({_id : tileToMove._id}, {$set : {tileState : "played"}});
+
+  return token;
+
 };

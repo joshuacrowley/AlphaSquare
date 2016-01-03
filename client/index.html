@@ -4,18 +4,19 @@
 				<h1 class="animated pulse"><strong>Alpha</strong>Square</h1>
 			</div>
 			<div class="row">
-				<h4>Take the best guess, first!</h4>
-				<p class="byline">A multiplayer brain training game from the ABC</p>
+				<h4>Square off!</h4>
+				<p class="byline">A two player competitive puzzle. Create a private game and then send a link to a friend to play, or join a public game.</p>
  			</div>
  		</div>
  		
-		<div>
-			<button id="join-game" class="button-primary">Join public game</button>
+		<div id="menu-buttons">
+			<button id="join-public" class="button-primary">Join public game</button>
+
+			<button id="create-private" class="button-primary">Create private game</button>
 		</div>
 
-		<img id="slice" class="u-max-full-width" src="slice.png" />
+		<!--<img id="slice" class="u-max-full-width" src="slice.png" />-->
 
-		<a href="https://mixpanel.com/f/partner"><img src="//cdn.mxpnl.com/site_media/images/partner/badge_light.png" alt="Mobile Analytics" /></a>
 
 </template>
 
@@ -50,7 +51,7 @@
 					<h3 id="logotype"><strong>Alpha</strong>Square</h3>
 					{{#if gameOver}}
 						<span><strong>This game is over.</strong></span>
-						<button id="join-game">Join new game</button>
+						<button id="join-game">Create new game</button>
 					{{else}}
 						
 						<span><strong id="outcome">{{outcome}}</strong> This game has been running since {{gameTime}}. There are {{tilesLeft}} letters left. Your score is {{gameScore}}.</span>
@@ -68,16 +69,17 @@
 			</div>
 			<div class="two columns">
 				{{> tileList}}
+				
+				<div id="mobile"><span><strong id="outcome">{{outcome}}</strong> This game has been running since {{gameTime}}. There are {{tilesLeft}} letters left. Your score is {{gameScore}}.</span></div>
+
 				<p id="instructions"><a class="scroll" href="#how">Instructions are below</a></p>
 			</div>
 		</div>
 
 		<div class="row">
-			<!--{{> rules}}-->
+			{{> rules}}
 		</div>
 
-		<a href="https://mixpanel.com/f/partner"><img src="//cdn.mxpnl.com/site_media/images/partner/badge_light.png" alt="Mobile Analytics" /></a>
-		
 	</div>
 
 </template>
