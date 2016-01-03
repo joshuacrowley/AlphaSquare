@@ -5,6 +5,7 @@ Template.menu.events({
       Session.set('gameToken', result);
     });
     analytics.track("Joined game");
+    Session.set("outcome", "You've created a public game. You'll need to wait until someone joins. They'll go first.");
     //ga('send', 'event', 'button', 'click', 'join-game');
   },
     'click #create-private': function () {
@@ -12,7 +13,7 @@ Template.menu.events({
       Router.go('games', {_id: result});
       Session.set('gameToken', result);
     });
-    Session.set("outcome", "Created a private game, share the url with a friend! They'll get to go first.");
+    Session.set("outcome", "You've created a private game. Share this url with a friend to play. They'll get to go first.");
     analytics.track("Joined game");
     //ga('send', 'event', 'button', 'click', 'join-game');
   }

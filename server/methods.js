@@ -3,7 +3,7 @@ Meteor.methods({
   findGame : function(gameOwner, publicGame){
 
     if(publicGame){
-      var games = Games.findOne({finished: false, publicGame : true});
+      var games = Games.findOne({finished: false, publicGame : true, gameOpponent: "none"});
       if (games != undefined){
         return games.gameToken;
       }else{
