@@ -57,7 +57,7 @@ Template.tileList.helpers({
     if(Session.get("shared") === true){
       return _.first(tileHand, 4);
     }else{
-      return _.first(tileHand, 3);
+      return _.first(tileHand, 5);
     };
   },
   gameUrl: function() {
@@ -96,9 +96,6 @@ Template.tileList.onRendered(function () {
 
 
 });
-
-
-
 
 
 
