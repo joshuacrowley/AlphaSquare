@@ -5,7 +5,6 @@ Gameboard = React.createClass({
   mixins: [ReactMeteorData],
 
 	getMeteorData() {
-
   		return {
     		boxes : Boxes.find({gameToken : Session.get("gameToken")},{sort : { boxOrder : 1}}).fetch(),
     		game: Games.findOne({gameToken : Session.get("gameToken")})
@@ -14,7 +13,7 @@ Gameboard = React.createClass({
 
 	buildRows(){
 		gameRows = [];
-		var n = 5;
+		var n = 6;
 		var rows = _.groupBy(this.data.boxes, function(element, index){return Math.floor(index/n)});
 		rows = _.toArray(rows);
 		game = this.data.game;
@@ -23,8 +22,6 @@ Gameboard = React.createClass({
   		});
   		return (gameRows);
 	},
-
-
 
 	render() {
     return (<div id="board">{this.buildRows()}</div>);

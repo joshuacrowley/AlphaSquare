@@ -47,7 +47,7 @@ numberAlpha = function(number) {
 	    }
 	};
 
-placeTile = function(tileSpot, boxSpot, penaltyValue) {
+placeTile = function(tileSpot, boxSpot, penaltyValue, penaltyAmount) {
 
 	var tileToMove = Tiles.findOne({gameToken : Session.get("gameToken"), spot: tileSpot });
 	var BoxToPlace = Boxes.findOne({gameToken : Session.get("gameToken"), boxOrder : boxSpot});
@@ -66,7 +66,8 @@ placeTile = function(tileSpot, boxSpot, penaltyValue) {
 
         }else{
 
-          Session.set("outcome", "Oh no. Your tile matched the spot, so you don't earn any points. Pick another tile.");
+          Session.set("outcome", "Your tile matched the spot. You've lost " + penaltyAmount + ". Pick another tile.");
+          Meteor.call('updateScore', Session.get("gameId"), Session.get("playerToken"), -penaltyAmount);
 
         }
 
@@ -117,7 +118,7 @@ runLogic = function(){
     };
   });
 
-  var puzzle = game.match(/.{1,5}/g);
+  var puzzle = game.match(/.{1,6}/g);
 
     var v = function (row, col, value) {
       return row + "," + col + "=" + value;
@@ -128,17 +129,17 @@ runLogic = function(){
       var solver = new Logic.Solver();
 
       // All rows, columns, and digits are 0-based internally.
-      for (var x = 0; x < 5; x++) {
+      for (var x = 0; x < 6; x++) {
         // Find the top-left of box x. For example, Box 0 has a top-left
         // of (0,0).  Box 3 has a top-left of (3,0).
         //var boxRow = Math.floor(x/3)*3;
         //var boxCol = (x%3)*3;
-        for (var y = 0; y < 5; y++) {
+        for (var y = 0; y < 6; y++) {
           var numberInEachSquare = [];
           var columnHavingYInRowX = [];
           var rowHavingYInColumnX = [];
           var squareHavingYInBoxX = [];
-          for (var z = 0; z < 5; z++) {
+          for (var z = 0; z < 6; z++) {
             numberInEachSquare.push(v(x,y,z));
             columnHavingYInRowX.push(v(x,z,y));
             rowHavingYInColumnX.push(v(z,x,y));
@@ -155,12 +156,12 @@ runLogic = function(){
         }
       }
 
-      for (var r = 0; r < 5; r++) {
+      for (var r = 0; r < 6; r++) {
         var str = puzzle[r];
-        for (var c = 0; c < 5; c++) {
+        for (var c = 0; c < 6; c++) {
           // zero-based digit
           var digit = str.charCodeAt(c) - 49;
-          if (digit >= 0 && digit < 5) {
+          if (digit >= 0 && digit < 6) {
             solver.require(v(r, c, digit));
           }
         }
@@ -170,17 +171,17 @@ runLogic = function(){
       console.log("Solved in " + ((new Date) - T) + " ms");
 
       var solution = [];
-      for (var r = 0; r < 5; r++) {
+      for (var r = 0; r < 6; r++) {
         var row = [];
         solution.push(row);
         var str = puzzle[r];
-        for (var c = 0; c < 5; c++) {
+        for (var c = 0; c < 6; c++) {
           var chr = str.charAt(c);
-          if (chr >= "1" && chr <= "5") {
+          if (chr >= "1" && chr <= "6") {
             row.push({given: chr});
           } else {
             var nums = [];
-            for (var d = 0; d < 5; d++) {
+            for (var d = 0; d < 6; d++) {
               var x = v(r, c, d);
               if (solver.solveAssuming(x)) {
                 nums.push(d+1);

@@ -11,9 +11,10 @@ Box = React.createClass({
   },
 
 	boxType() {
-		if(this.props.box.hidden){
-			var penaltyValue = numberAlpha(this.props.box.penaltyValue)
-			return (<span className="center guess animated julse">{penaltyValue}</span>)
+		if(this.props.box.hidden === true && this.props.box.penaltyValue != 0){
+			var penaltyValue = numberAlpha(this.props.box.penaltyValue);
+			var penaltyAmount = this.props.box.penaltyAmount;
+			return (<span className="guess animated julse">{penaltyValue}{penaltyAmount}</span>)
 		}else{
 			var content = numberAlpha(this.props.box.content);
 			return (<span className="center bounceIn animated {gameOver}" data-content={this.props.box.content} >{content}</span>)
@@ -39,7 +40,7 @@ Box = React.createClass({
 			var number = $(selected).data("spot");
 			var content = $(selected).data("content");
 
-			placeTile(number, this.props.box.boxOrder, this.props.box.penaltyValue);
+			placeTile(number, this.props.box.boxOrder, this.props.box.penaltyValue, this.props.box.penaltyAmount);
 			$( "li" ).removeClass("highlight");
 
     	}else{

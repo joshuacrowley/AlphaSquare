@@ -17,7 +17,6 @@ Router.route('/', {
     		analytics.identify(playerToken);
  
 		}else{
-			
 			analytics.identify(Session.get('playerToken'));
 		};
 	}

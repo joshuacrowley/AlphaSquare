@@ -165,7 +165,7 @@ p {
 .box {
 	flex: 1 0 auto;
 	-webkit-flex: 1 0 auto;
-	max-width: 20%;
+	max-width: 16.666%;
 	max-height: 100%;
 	border: 1px solid #D7D7D7;
 	box-sizing: border-box;
@@ -204,7 +204,7 @@ p {
 	-webkit-flex-flow: row;
 	flex-flow: row;
 	display: flex;
-	min-height: 20%;
+	min-height: 16.666%;
 	min-width: 100%;
 }
 

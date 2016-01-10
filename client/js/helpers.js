@@ -53,7 +53,7 @@ Template.tileList.helpers({
       ownerType = "none";
     };
 
-    var tileHand = Tiles.find({gameToken : Session.get("gameToken"), tileState: "unplayed", owner: ownerType}).fetch();
+    var tileHand = Tiles.find({gameToken : Session.get("gameToken"), tileState: "unplayed", owner: ownerType},{sort : { shuffle : 1}}).fetch();
     if(Session.get("shared") === true){
       return _.first(tileHand, 4);
     }else{
@@ -93,8 +93,6 @@ Template.tileList.onRendered(function () {
       }
     });
   });
-
-
 });
 
 
