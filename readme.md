@@ -1,1 +1,3 @@
-Multiplayer latin square hosted at alphabetter.meteor.com
+2 player competitive latin square task
+
+Hosted at alphasquare.meteor.com

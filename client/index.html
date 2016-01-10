@@ -1,24 +1,22 @@
 <template name="menu">
 		<div class="container">
 			<div class="row">
-				<h1 class="animated pulse"><strong>Alpha</strong>Better</h1>
-				<div class="byline">
-				<span>by </span> <img style="width:200px;" src="logo.png" />
-				</div>
+				<h1 class="animated pulse"><strong>Alpha</strong>Square</h1>
 			</div>
 			<div class="row">
-				<h4>Take the best guess, first!</h4>
-				<p class="byline">A multiplayer brain training game from the ABC</p>
+				<h4>Square off!</h4>
+				<p class="byline">A two player competitive puzzle. Create a private game and then send a link to a friend to play, or join a public game.</p>
  			</div>
  		</div>
  		
-		<div>
-			<button id="join-game" class="button-primary">Join public game</button>
+		<div id="menu-buttons">
+			<button id="join-public" class="button-primary">Join public game</button>
+
+			<button id="create-private" class="button-primary">Create private game</button>
 		</div>
 
-		<img id="slice" class="u-max-full-width" src="slice.png" />
+		<!--<img id="slice" class="u-max-full-width" src="slice.png" />-->
 
-		<a href="https://mixpanel.com/f/partner"><img src="//cdn.mxpnl.com/site_media/images/partner/badge_light.png" alt="Mobile Analytics" /></a>
 
 </template>
 
@@ -37,8 +35,7 @@
 			<div class="row">
 				<div class="ten columns">
 			<span style="display:block;margin-top:25px;">
-				<strong>Latest Fix</strong> – Occasionally your placed tile wouldn’t correspond with the tile selected. This is now fixed.
-				<br> <strong>New Feature</strong> – You can play AlphaBetter on your smartphone.
+				Thanks for trying AlphaSquare. The game is still in development and might be a bit buggy. Apologies for any frustration caused.
 			</span> 
 				</div>
 			</div>
@@ -51,10 +48,10 @@
 		<div class="row" id="gameboard">
 			<div class="three columns">
 				<div class="row">
-					<h3 id="logotype"><strong>Alpha</strong>Better</h3>
+					<h3 id="logotype"><strong>Alpha</strong>Square</h3>
 					{{#if gameOver}}
-						<span><strong>This game is over.</strong> Enjoying brain training? Why not try<a href="http://activememory.com/?utm_source=bigboard&utm_medium=banner&utm_campaign=Big%20Board%20Refferal"> ABC Active Memory</a>.</span>
-						<button id="join-game">Join new game</button>
+						<span><strong>This game is over.</strong></span>
+						<button id="join-game">Create new game</button>
 					{{else}}
 						
 						<span><strong id="outcome">{{outcome}}</strong> This game has been running since {{gameTime}}. There are {{tilesLeft}} letters left. Your score is {{gameScore}}.</span>
@@ -72,6 +69,9 @@
 			</div>
 			<div class="two columns">
 				{{> tileList}}
+				
+				<div id="mobile"><span><strong id="outcome">{{outcome}}</strong> This game has been running since {{gameTime}}. There are {{tilesLeft}} letters left. Your score is {{gameScore}}.</span></div>
+
 				<p id="instructions"><a class="scroll" href="#how">Instructions are below</a></p>
 			</div>
 		</div>
@@ -80,8 +80,6 @@
 			{{> rules}}
 		</div>
 
-		<a href="https://mixpanel.com/f/partner"><img src="//cdn.mxpnl.com/site_media/images/partner/badge_light.png" alt="Mobile Analytics" /></a>
-		
 	</div>
 
 </template>

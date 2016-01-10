@@ -8,7 +8,11 @@ a {
 }
 
 .suggest {
-	background-color: white !important;
+	background-color: #F6F2EA !important;
+}
+
+#menu-buttons > button {
+	margin-bottom: 2vh;
 }
 
 button {
@@ -161,8 +165,7 @@ p {
 .box {
 	flex: 1 0 auto;
 	-webkit-flex: 1 0 auto;
-	min-width: 10%;
-	max-width: 10%;
+	max-width: 16.666%;
 	max-height: 100%;
 	border: 1px solid #D7D7D7;
 	box-sizing: border-box;
@@ -183,7 +186,7 @@ p {
 .center {
 	text-align: center;
 	line-height: 10px;
-	font-size: 22px;
+	font-size: 40px;
   	margin: auto;
   	display: block;
   	margin-top: 38%;
@@ -201,7 +204,7 @@ p {
 	-webkit-flex-flow: row;
 	flex-flow: row;
 	display: flex;
-	min-height: 10%;
+	min-height: 16.666%;
 	min-width: 100%;
 }
 
@@ -275,6 +278,8 @@ form {
 }
 
 @media only screen and (max-width: 767px) and (orientation: portrait) {
+
+
 
 	#mobile{
 		display: block;

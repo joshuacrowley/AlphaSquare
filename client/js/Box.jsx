@@ -11,9 +11,10 @@ Box = React.createClass({
   },
 
 	boxType() {
-		if(this.props.box.hidden){
-			var guess = numberAlpha(this.props.box.guess)
-			return (<span className="center guess animated julse">{guess}</span>)
+		if(this.props.box.hidden === true && this.props.box.penaltyValue != 0){
+			var penaltyValue = numberAlpha(this.props.box.penaltyValue);
+			var penaltyAmount = this.props.box.penaltyAmount;
+			return (<span className="guess animated julse">{penaltyValue}{penaltyAmount}</span>)
 		}else{
 			var content = numberAlpha(this.props.box.content);
 			return (<span className="center bounceIn animated {gameOver}" data-content={this.props.box.content} >{content}</span>)
@@ -21,6 +22,8 @@ Box = React.createClass({
 	},
 
 	tileTime() {
+
+		if(Session.get("playerToken") != this.props.gameData.turnState){
 
 		var suggest = false
 
@@ -37,21 +40,18 @@ Box = React.createClass({
 			var number = $(selected).data("spot");
 			var content = $(selected).data("content");
 
-			var outcome = runLogic(true, this.props.box.boxOrder,content);
-
-			if(outcome){
-
-				placeTile(number, this.props.box.boxOrder);
-    			//var highlightedTile = tiles.index(selected) + 1;
-      			$( "li" ).removeClass("highlight");
-			}else{
-				Session.set("outcome", "That would break the board.");
-			};
+			placeTile(number, this.props.box.boxOrder, this.props.box.penaltyValue, this.props.box.penaltyAmount);
+			$( "li" ).removeClass("highlight");
 
     	}else{
       		Session.set("outcome", "Select a tile from the list on the far right. Then click on a box.");
       		analytics.track("No placement");
     	};
+
+    }else{
+    	Session.set("outcome", "It's not your turn.");
+    	analytics.track("Not your turn");
+    }
 
 	},
 
@@ -101,7 +101,7 @@ Box = React.createClass({
       			suggest = true
 			};
 
-		var suggestHelper = suggest === false ? " suggest" : "";
+		var suggestHelper = suggest === false ? " suggest" : " white";
 		var gameOver = this.props.gameData.endGame === true && this.props.box.hidden === false ? "box white" : "box";
 		var boxClass =  gameOver += suggestHelper;
 

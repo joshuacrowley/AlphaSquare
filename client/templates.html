@@ -1,22 +1,3 @@
-<template name="hall">
-		<h4>Hall of Fame</h4>
-
-		<table id="vertical">
-			<thead>
-			    <tr>
-			      	<th>Board</th>
-			      	<th>Winner</th>
-			      	<th>Score</th>
-			    </tr>
-		 	</thead>
-			<tbody>
-				{{#each winners}}
-					{{> winnerRecord}}
-				{{/each}}
-			</tbody>
-		</table>
-</template>
-
 <template name="leaderboard">
 	<div class="leaderboard">
 				<table id="vertical">
@@ -76,27 +57,17 @@
 	{{/if}}
 </template>
 
-<template name="announcement">
-		<div class="container" id="">
-			<div class="row">
-				<a href="http://activememory.com/?utm_source=AlphaBetter&utm_medium=banner&utm_campaign=AlphaBetter%20Refferal">
-					<img id="announcement" class="u-max-full-width" src="desktop.png" />
-					<img id="mobile" class="u-max-full-width" src="mobile.png" />
-				</a>
-			</div>
-		</div>
-</template>
-
 <template name="rules">
 	<div class="container">
 		<div class="row">
 
 			<h4 id="how">How to play</h4>
 			<div id="rules">
-				<p>AlphaBetter is a multiplayer brain training puzzle. Everyone viewing this webpage sees the same board and letters, and you can see other people's guesses and score in real time!</p>
-				<p>The aim of the puzzle is to place all the tiles in their logical positions, with the following rule: <em>no row or column can have the same letter twice</em>.</p>
-				<p>If your guess is correct, you’ll get a point towards your winning streak. If you take a guess and get it wrong, your streak will be cleared and your guess will be added to the board, in grey. This will help everyone with their next guess. Only one guess will be displayed at a time, so try and remember everyone's attempts, so you have the best chance of getting it correct.</p>
-				<p>The board is set to a specific sequence, so it’s rare that you’ll truly have enough information to place a tile with 100% confidence. You’ll need to use your memory, cognitive flexibility and your own strategies to improve your chances and get a high streak.</p>
+				<p>Alpha Square is a two player competitive puzzle. Create a game and then send a link to a friend to play, or join a public game and wait for an opponent.</p>
+
+				<p>The aim of the puzzle is to take turns placing tiles, with the following rule: <em>no row or column can have the same letter twice</em>. All tiles need to be placed for the game to end, and therefore each row and column will have a unique combination of the 5 tile types, by the end. You cannot make a move which wouldn't allow the board to be completed under these conditions.</p>
+				<p>Each tile you place will earn you two points, unless you place a tile on an empty space with the same letter, in which case you won't gain any points.</p>
+				<p>To beat your opponent, try and force them to play tiles on matching spaces so they miss out on points.</p> 
 			</div>
 		</div>
 	</div>
@@ -105,16 +76,6 @@
 <template name="why">
 	<div class="container">
 		<div class="row">
-
-			<h3>Why train your brain?</h3>
-			<div id="rules">				
-				<p><strong>Exercise your cognitive abilities</strong></p>
-				<p>Active Memory games are based on cognitive tasks traditionally used to measure the brain’s ability. It's accepted in the scientific community that our brains are much more plastic than previously thought, and can be improved through mental exercises, improved confidence and clever strategies. Active Memory participants are helping the scientific community understand the efficacy of brain training.</p>
-				<p><strong>Sharpen your memory and attention</strong></p>
-				<p>Active Memory provides a context where you can learn and test effective strategies that work for you, and are transferable to real-life tasks and activities. For example, a technique called ‘chunking’ helps you remember more. Some Active Memory games challenge you to try and group content into equal parts, so they’re easier to recall as a whole – this technique can help you remember every day things like phone numbers and grocery lists.</p>
-				<p><strong>Build your confidence</strong></p>
-				<p>Your confidence at the task at hand is a huge factor in your performance. When you succeed at new challenges, you’re often challenging assumptions about your ability, and gaining confidence in yourself. This new found confidence can have broad effects on your ability across a range of real-life tasks.</p>
-			</div>
 
 			<div>
 				<p style="text-align:center;"><strong>Try ABC Active Memory for free</strong></p>
@@ -145,12 +106,12 @@
 		{{#if shared}}
 		{{else}}
 
-
+<!--
 		<a id="facebook" href="{{gameUrl}}">
 			<img style="margin-top:20px" src="../../invite-01.png"/>
 		</a>
 
-		<!--
+		
 			<a href="{{gameUrl}}"><button id="join-game" class="button-primary">Share on <i style="font-size:14px;" class="fa fa-facebook-official"></i></button></a>
 			<span>And you'll get an extra tile!</span>
 
