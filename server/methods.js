@@ -59,7 +59,7 @@ Meteor.methods({
     Boxes.update({ _id : BoxToPlace._id}, {$set : {content : tileToMove.content, hidden : false}});
     Tiles.update({_id : tileToMove._id}, {$set : {tileState : "played"}});
     var boxCount = Boxes.find({gameToken: gameToken, hidden : false}).count();
-        if(boxCount === 25){
+        if(boxCount === 30){
           Games.update({gameToken: gameToken}, {$set: {finished : true}});
           console.log('game over');
         }else{
